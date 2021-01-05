@@ -23,3 +23,28 @@ artifacts:
     - "build/*"
     - appspec.yml
     - scripts/deploy.sh
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo Installing app dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Building static site...
+      - npm run build
+
+artifacts:
+  type: zip
+  paths:
+    - './build/**/*'
+    - './scripts/**/*'
+    - appspec.yml
+
+cache:
+  paths:
+    - './node_modules/**/*'
