@@ -5,10 +5,25 @@ files:
   - source: /
     destination: /home/ubuntu/server
 
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
 hooks:
 
-  ApplicationStart:
-    - location: scripts/deploy.sh
+  BeforeInstall:
+    - location: scripts/before_install.sh
       timeout: 300
       runas: root
   
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/app_start.sh
+      timeout: 300
+      runas: root
